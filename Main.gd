@@ -7,6 +7,9 @@ onready var error_dialog = $ErrorDialog
 
 onready var ui_anim = $UIAnimations
 
+onready var sprite_size_check = $VBoxContainer/TopPanel/Buttons/SpriteSize/SpriteSizeCheckBox
+onready var sprite_size_spin = $VBoxContainer/TopPanel/Buttons/SpriteSize/SpriteSizeSpinBox
+
 onready var x_offset_button = $VBoxContainer/ToolPanel/Buttons/XOffset
 onready var y_offset_button = $VBoxContainer/ToolPanel/Buttons/YOffset
 
@@ -38,9 +41,7 @@ func _ready():
 	pass 
 
 func _process(delta):
-	pass
-	x_offset_button.value = -sprite.offset.x
-	y_offset_button.value = -sprite.offset.y
+	sprite.scale = Vector2(sprite_size_spin.value, sprite_size_spin.value)
 
 func _input(event):
 	if Input.is_mouse_button_pressed(1):
@@ -133,13 +134,6 @@ func _on_FileDialog_dir_selected(dir):
 			new_animation(x.get_string(1), x.get_string(2), x.get_string(3))
 
 
-func _on_SmallSpriteToggle_toggled(button_pressed):
-	if button_pressed:
-		sprite.scale = Vector2(2, 2)
-	else:
-		sprite.scale = Vector2(1, 1)
-
-
 func _on_MoveTool_toggled(button_pressed):
 	if button_pressed:
 		current_tool = Tools.MOVE
@@ -179,3 +173,11 @@ func _on_UpdateButton_pressed():
 
 func _on_CurrentAnimButton_item_selected(index):
 	animations.current_animation = current_anim_button.get_item_text(index)
+
+
+func _on_SpriteSizeCheckBox_toggled(button_pressed):
+	if button_pressed:
+		sprite_size_spin.editable = true
+	else:
+		sprite_size_spin.value = 1
+		sprite_size_spin.editable = false

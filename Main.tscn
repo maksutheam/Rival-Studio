@@ -153,12 +153,26 @@ margin_bottom = 27.0
 size_flags_horizontal = 2
 text = "Select Folder"
 
-[node name="SmallSpriteToggle" type="CheckBox" parent="VBoxContainer/TopPanel/Buttons"]
-margin_left = 406.0
-margin_right = 588.0
+[node name="SpriteSize" type="HBoxContainer" parent="VBoxContainer/TopPanel/Buttons"]
+margin_left = 371.0
+margin_right = 623.0
+margin_bottom = 27.0
+
+[node name="SpriteSizeCheckBox" type="CheckBox" parent="VBoxContainer/TopPanel/Buttons/SpriteSize"]
+margin_right = 174.0
+margin_bottom = 27.0
+text = "Custom Sprite Size:"
+
+[node name="SpriteSizeSpinBox" type="SpinBox" parent="VBoxContainer/TopPanel/Buttons/SpriteSize"]
+margin_left = 178.0
+margin_right = 252.0
 margin_bottom = 27.0
 size_flags_horizontal = 6
-text = "Toggle Small Sprites"
+step = 0.1
+value = 1.0
+allow_greater = true
+allow_lesser = true
+editable = false
 
 [node name="UpdateButton" type="Button" parent="VBoxContainer/TopPanel/Buttons"]
 margin_left = 865.0
@@ -255,7 +269,7 @@ dialog_text = "Couldn't find load.gml or config.ini!
 [connection signal="mouse_entered" from="Grid" to="." method="_on_Grid_mouse_entered"]
 [connection signal="mouse_exited" from="Grid" to="." method="_on_Grid_mouse_exited"]
 [connection signal="pressed" from="VBoxContainer/TopPanel/Buttons/FolderButton" to="." method="_on_FolderButton_pressed"]
-[connection signal="toggled" from="VBoxContainer/TopPanel/Buttons/SmallSpriteToggle" to="." method="_on_SmallSpriteToggle_toggled"]
+[connection signal="toggled" from="VBoxContainer/TopPanel/Buttons/SpriteSize/SpriteSizeCheckBox" to="." method="_on_SpriteSizeCheckBox_toggled"]
 [connection signal="pressed" from="VBoxContainer/TopPanel/Buttons/UpdateButton" to="." method="_on_UpdateButton_pressed"]
 [connection signal="item_selected" from="VBoxContainer/ToolPanel/Buttons/CurrentAnimButton" to="." method="_on_CurrentAnimButton_item_selected"]
 [connection signal="toggled" from="VBoxContainer/ToolPanel/Buttons/MoveTool" to="." method="_on_MoveTool_toggled"]
