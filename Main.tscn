@@ -1,14 +1,12 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://stage.png" type="Texture" id=2]
+[ext_resource path="res://Config.gd" type="Script" id=3]
 [ext_resource path="res://theme.tres" type="Theme" id=4]
 
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0.0862745, 0.0862745, 0.180392, 1 )
-
-[sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.152941, 0.137255, 0.266667, 1 )
 
 [sub_resource type="StreamTexture" id=7]
 
@@ -51,10 +49,13 @@ tracks/2/keys = {
 "values": [ 1 ]
 }
 
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.152941, 0.137255, 0.266667, 1 )
+
 [sub_resource type="Animation" id=5]
 resource_name = "CharUpdated"
 tracks/0/type = "value"
-tracks/0/path = NodePath("VBoxContainer/VBoxContainer/TopPanel/Buttons/UpdateButton:self_modulate")
+tracks/0/path = NodePath("VBoxContainer/TopPanel/Buttons/UpdateButton:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -69,7 +70,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=6]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("VBoxContainer/VBoxContainer/TopPanel/Buttons/UpdateButton:text")
+tracks/0/path = NodePath("VBoxContainer/TopPanel/Buttons/UpdateButton:text")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -81,7 +82,7 @@ tracks/0/keys = {
 "values": [ "Update Character" ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("VBoxContainer/VBoxContainer/TopPanel/Buttons/UpdateButton:self_modulate")
+tracks/1/path = NodePath("VBoxContainer/TopPanel/Buttons/UpdateButton:self_modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -109,19 +110,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = 51.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+[node name="TopPanel" type="Panel" parent="VBoxContainer"]
 margin_right = 1024.0
-margin_bottom = 72.0
+margin_bottom = 42.0
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.15
-
-[node name="TopPanel" type="Panel" parent="VBoxContainer/VBoxContainer"]
-margin_right = 1024.0
-margin_bottom = 34.0
-size_flags_vertical = 3
+size_flags_stretch_ratio = 0.07
 custom_styles/panel = SubResource( 4 )
 
-[node name="Buttons" type="HBoxContainer" parent="VBoxContainer/VBoxContainer/TopPanel"]
+[node name="Buttons" type="HBoxContainer" parent="VBoxContainer/TopPanel"]
 anchor_left = 0.01
 anchor_top = 0.104
 anchor_right = 0.982
@@ -131,49 +127,79 @@ margin_top = 0.176
 margin_right = -0.567993
 margin_bottom = -2.136
 
-[node name="FolderButton" type="Button" parent="VBoxContainer/VBoxContainer/TopPanel/Buttons"]
+[node name="FolderButton" type="Button" parent="VBoxContainer/TopPanel/Buttons"]
 margin_right = 106.0
-margin_bottom = 27.0
+margin_bottom = 32.0
 size_flags_horizontal = 2
 text = "Select Folder"
 
-[node name="SpriteSize" type="HBoxContainer" parent="VBoxContainer/VBoxContainer/TopPanel/Buttons"]
-margin_left = 371.0
-margin_right = 623.0
-margin_bottom = 27.0
+[node name="SpriteSize" type="HBoxContainer" parent="VBoxContainer/TopPanel/Buttons"]
+margin_left = 360.0
+margin_right = 634.0
+margin_bottom = 32.0
 
-[node name="SpriteSizeCheckBox" type="CheckBox" parent="VBoxContainer/VBoxContainer/TopPanel/Buttons/SpriteSize"]
+[node name="SpriteSizeCheckBox" type="CheckBox" parent="VBoxContainer/TopPanel/Buttons/SpriteSize"]
 margin_right = 174.0
-margin_bottom = 27.0
+margin_bottom = 32.0
 text = "Custom Sprite Size:"
 
-[node name="SpriteSizeSpinBox" type="SpinBox" parent="VBoxContainer/VBoxContainer/TopPanel/Buttons/SpriteSize"]
+[node name="SpriteSizeSpinBox" type="SpinBox" parent="VBoxContainer/TopPanel/Buttons/SpriteSize"]
 margin_left = 178.0
-margin_right = 252.0
-margin_bottom = 27.0
+margin_right = 274.0
+margin_bottom = 32.0
 size_flags_horizontal = 6
+theme = ExtResource( 4 )
 step = 0.1
 value = 1.0
 allow_greater = true
 allow_lesser = true
+align = 1
 editable = false
 
-[node name="UpdateButton" type="Button" parent="VBoxContainer/VBoxContainer/TopPanel/Buttons"]
+[node name="UpdateButton" type="Button" parent="VBoxContainer/TopPanel/Buttons"]
 margin_left = 865.0
 margin_right = 995.0
-margin_bottom = 27.0
+margin_bottom = 32.0
 size_flags_horizontal = 10
 text = "Update Character"
 
-[node name="ToolPanel" type="Panel" parent="VBoxContainer/VBoxContainer"]
-margin_top = 38.0
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
+margin_top = 46.0
 margin_right = 1024.0
-margin_bottom = 72.0
+margin_bottom = 651.0
+size_flags_vertical = 3
+
+[node name="OffsetEdit" type="TextureRect" parent="VBoxContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 35.0
+mouse_filter = 0
+size_flags_horizontal = 4
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+stretch_mode = 6
+
+[node name="Sprite" type="Sprite" parent="VBoxContainer/TabContainer/OffsetEdit"]
+position = Vector2( 512, 401 )
+texture = SubResource( 7 )
+centered = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="VBoxContainer/TabContainer/OffsetEdit/Sprite"]
+reset_on_save = false
+anims/RESET = SubResource( 1 )
+
+[node name="Tools" type="Panel" parent="VBoxContainer/TabContainer/OffsetEdit"]
+anchor_right = 1.0
+margin_bottom = 36.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
 
-[node name="Buttons" type="HBoxContainer" parent="VBoxContainer/VBoxContainer/ToolPanel"]
+[node name="Buttons" type="HBoxContainer" parent="VBoxContainer/TabContainer/OffsetEdit/Tools"]
 anchor_left = 0.05
 anchor_top = 0.104
 anchor_right = 0.95
@@ -184,27 +210,27 @@ margin_right = -0.567993
 margin_bottom = -2.136
 size_flags_horizontal = 3
 
-[node name="CurrentAnimButton" type="OptionButton" parent="VBoxContainer/VBoxContainer/ToolPanel/Buttons"]
+[node name="CurrentAnimButton" type="OptionButton" parent="VBoxContainer/TabContainer/OffsetEdit/Tools/Buttons"]
 margin_right = 168.0
 margin_bottom = 27.0
 theme = ExtResource( 4 )
 text = "-Current Animation-"
 
-[node name="VSeparator" type="VSeparator" parent="VBoxContainer/VBoxContainer/ToolPanel/Buttons"]
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/TabContainer/OffsetEdit/Tools/Buttons"]
 margin_left = 172.0
 margin_right = 176.0
 margin_bottom = 27.0
 
-[node name="MoveTool" type="Button" parent="VBoxContainer/VBoxContainer/ToolPanel/Buttons"]
+[node name="MoveTool" type="Button" parent="VBoxContainer/TabContainer/OffsetEdit/Tools/Buttons"]
 margin_left = 180.0
 margin_right = 270.0
 margin_bottom = 27.0
 toggle_mode = true
 text = "Move Offset"
 
-[node name="XOffset" type="SpinBox" parent="VBoxContainer/VBoxContainer/ToolPanel/Buttons"]
+[node name="XOffset" type="SpinBox" parent="VBoxContainer/TabContainer/OffsetEdit/Tools/Buttons"]
 margin_left = 274.0
-margin_right = 348.0
+margin_right = 370.0
 margin_bottom = 27.0
 min_value = -999.0
 max_value = 999.0
@@ -215,9 +241,9 @@ align = 1
 editable = false
 prefix = "X:"
 
-[node name="YOffset" type="SpinBox" parent="VBoxContainer/VBoxContainer/ToolPanel/Buttons"]
-margin_left = 352.0
-margin_right = 426.0
+[node name="YOffset" type="SpinBox" parent="VBoxContainer/TabContainer/OffsetEdit/Tools/Buttons"]
+margin_left = 374.0
+margin_right = 470.0
 margin_bottom = 27.0
 rounded = true
 allow_greater = true
@@ -226,39 +252,159 @@ align = 1
 editable = false
 prefix = "Y:"
 
-[node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
-margin_top = 76.0
-margin_right = 1024.0
-margin_bottom = 651.0
+[node name="Config" type="VBoxContainer" parent="VBoxContainer/TabContainer"]
+anchor_left = 0.014
+anchor_top = 0.01
+anchor_right = 0.981
+anchor_bottom = 0.971
+margin_top = 26.0
+size_flags_stretch_ratio = 0.81
+alignment = 1
+script = ExtResource( 3 )
+
+[node name="Name" type="HBoxContainer" parent="VBoxContainer/TabContainer/Config"]
+margin_right = 990.0
+margin_bottom = 25.0
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Config/Name"]
+margin_right = 493.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+text = "Character Name:"
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/TabContainer/Config/Name"]
+margin_left = 497.0
+margin_right = 990.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+
+[node name="Author" type="HBoxContainer" parent="VBoxContainer/TabContainer/Config"]
+margin_top = 29.0
+margin_right = 990.0
+margin_bottom = 54.0
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Config/Author"]
+margin_right = 493.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+text = "Author:"
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/TabContainer/Config/Author"]
+margin_left = 497.0
+margin_right = 990.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+placeholder_text = "If left blank, Steam nickname is used instead"
+placeholder_alpha = 0.5
+
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Config"]
+margin_top = 58.0
+margin_right = 990.0
+margin_bottom = 83.0
+text = "Info:"
+align = 1
+
+[node name="Info" type="HBoxContainer" parent="VBoxContainer/TabContainer/Config"]
+margin_top = 87.0
+margin_right = 990.0
+margin_bottom = 319.0
 size_flags_vertical = 3
 
-[node name="Offset Edit" type="TextureRect" parent="VBoxContainer/TabContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = 35.0
-mouse_filter = 0
-size_flags_horizontal = 4
+[node name="Info1" type="TextEdit" parent="VBoxContainer/TabContainer/Config/Info"]
+margin_right = 327.0
+margin_bottom = 232.0
+size_flags_horizontal = 3
+text = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+wrap_enabled = true
+
+[node name="Info2" type="TextEdit" parent="VBoxContainer/TabContainer/Config/Info"]
+margin_left = 331.0
+margin_right = 658.0
+margin_bottom = 232.0
+size_flags_horizontal = 3
+text = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+wrap_enabled = true
+
+[node name="Info3" type="TextEdit" parent="VBoxContainer/TabContainer/Config/Info"]
+margin_left = 662.0
+margin_right = 990.0
+margin_bottom = 232.0
+size_flags_horizontal = 3
+text = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+wrap_enabled = true
+
+[node name="Misc" type="HBoxContainer" parent="VBoxContainer/TabContainer/Config"]
+margin_top = 323.0
+margin_right = 990.0
+margin_bottom = 555.0
 size_flags_vertical = 3
-texture = ExtResource( 2 )
-stretch_mode = 6
+alignment = 1
 
-[node name="Sprite" type="Sprite" parent="VBoxContainer/TabContainer/Offset Edit"]
-position = Vector2( 508, 380 )
-texture = SubResource( 7 )
-centered = false
-__meta__ = {
-"_edit_lock_": true
-}
+[node name="Version" type="HBoxContainer" parent="VBoxContainer/TabContainer/Config/Misc"]
+margin_right = 494.0
+margin_bottom = 232.0
+size_flags_horizontal = 6
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="VBoxContainer/TabContainer/Offset Edit/Sprite"]
-reset_on_save = false
-anims/RESET = SubResource( 1 )
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Config/Misc/Version"]
+margin_top = 103.0
+margin_right = 192.0
+margin_bottom = 128.0
+size_flags_horizontal = 10
+text = "Major and Minor Version:"
+
+[node name="MajorV" type="SpinBox" parent="VBoxContainer/TabContainer/Config/Misc/Version"]
+margin_left = 196.0
+margin_top = 103.0
+margin_right = 292.0
+margin_bottom = 128.0
+size_flags_vertical = 4
+value = 1.0
+allow_greater = true
+allow_lesser = true
+align = 1
+
+[node name="Label2" type="Label" parent="VBoxContainer/TabContainer/Config/Misc/Version"]
+margin_left = 296.0
+margin_top = 103.0
+margin_right = 304.0
+margin_bottom = 128.0
+size_flags_horizontal = 10
+text = "."
+
+[node name="MinorV" type="SpinBox" parent="VBoxContainer/TabContainer/Config/Misc/Version"]
+margin_left = 308.0
+margin_top = 103.0
+margin_right = 404.0
+margin_bottom = 128.0
+size_flags_vertical = 4
+allow_greater = true
+allow_lesser = true
+align = 1
+
+[node name="CheckBox" type="CheckBox" parent="VBoxContainer/TabContainer/Config/Misc/Version"]
+margin_left = 408.0
+margin_top = 102.0
+margin_right = 494.0
+margin_bottom = 129.0
+size_flags_vertical = 6
+text = "Finished"
+
+[node name="Plural" type="CheckButton" parent="VBoxContainer/TabContainer/Config/Misc"]
+margin_left = 685.0
+margin_top = 99.0
+margin_right = 803.0
+margin_bottom = 133.0
+size_flags_horizontal = 6
+size_flags_vertical = 6
+text = "Plural"
 
 [node name="FileDialog" type="FileDialog" parent="."]
-margin_left = 226.0
-margin_top = 110.0
-margin_right = 775.0
-margin_bottom = 453.0
+margin_left = 211.0
+margin_top = 142.0
+margin_right = 814.0
+margin_bottom = 563.0
 window_title = "Avaa hakemisto"
 mode = 2
 access = 2
@@ -278,11 +424,13 @@ window_title = "Huomio!"
 dialog_text = "Couldn't find load.gml or config.ini!
 "
 
-[connection signal="pressed" from="VBoxContainer/VBoxContainer/TopPanel/Buttons/FolderButton" to="." method="_on_FolderButton_pressed"]
-[connection signal="toggled" from="VBoxContainer/VBoxContainer/TopPanel/Buttons/SpriteSize/SpriteSizeCheckBox" to="." method="_on_SpriteSizeCheckBox_toggled"]
-[connection signal="pressed" from="VBoxContainer/VBoxContainer/TopPanel/Buttons/UpdateButton" to="." method="_on_UpdateButton_pressed"]
-[connection signal="item_selected" from="VBoxContainer/VBoxContainer/ToolPanel/Buttons/CurrentAnimButton" to="." method="_on_CurrentAnimButton_item_selected"]
-[connection signal="toggled" from="VBoxContainer/VBoxContainer/ToolPanel/Buttons/MoveTool" to="." method="_on_MoveTool_toggled"]
-[connection signal="mouse_entered" from="VBoxContainer/TabContainer/Offset Edit" to="." method="_on_Grid_mouse_entered"]
-[connection signal="mouse_exited" from="VBoxContainer/TabContainer/Offset Edit" to="." method="_on_Grid_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/TopPanel/Buttons/FolderButton" to="." method="_on_FolderButton_pressed"]
+[connection signal="toggled" from="VBoxContainer/TopPanel/Buttons/SpriteSize/SpriteSizeCheckBox" to="." method="_on_SpriteSizeCheckBox_toggled"]
+[connection signal="pressed" from="VBoxContainer/TopPanel/Buttons/UpdateButton" to="." method="_on_UpdateButton_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/TabContainer/OffsetEdit" to="." method="_on_Grid_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/TabContainer/OffsetEdit" to="." method="_on_Grid_mouse_exited"]
+[connection signal="item_selected" from="VBoxContainer/TabContainer/OffsetEdit/Tools/Buttons/CurrentAnimButton" to="." method="_on_CurrentAnimButton_item_selected"]
+[connection signal="toggled" from="VBoxContainer/TabContainer/OffsetEdit/Tools/Buttons/MoveTool" to="." method="_on_MoveTool_toggled"]
+[connection signal="value_changed" from="VBoxContainer/TabContainer/OffsetEdit/Tools/Buttons/XOffset" to="." method="_on_XOffset_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/TabContainer/OffsetEdit/Tools/Buttons/YOffset" to="." method="_on_YOffset_value_changed"]
 [connection signal="dir_selected" from="FileDialog" to="." method="_on_FileDialog_dir_selected"]

@@ -10,14 +10,14 @@ onready var ui_anim = $UIAnimations
 onready var sprite_size_check = $VBoxContainer/TopPanel/Buttons/SpriteSize/SpriteSizeCheckBox
 onready var sprite_size_spin = $VBoxContainer/TopPanel/Buttons/SpriteSize/SpriteSizeSpinBox
 
-onready var x_offset_button = $VBoxContainer/ToolPanel/Buttons/XOffset
-onready var y_offset_button = $VBoxContainer/ToolPanel/Buttons/YOffset
+onready var x_offset_button = $VBoxContainer/TabContainer/OffsetEdit/Tools/Buttons/XOffset
+onready var y_offset_button = $VBoxContainer/TabContainer/OffsetEdit/Tools/Buttons/YOffset
 
-onready var current_anim_button = $VBoxContainer/ToolPanel/Buttons/CurrentAnimButton
+onready var current_anim_button = $VBoxContainer/TabContainer/OffsetEdit/Tools/Buttons/CurrentAnimButton
 
-onready var grid = $Grid
-onready var sprite = $Grid/Sprite
-onready var animations = $Grid/Sprite/AnimationPlayer
+onready var grid = $VBoxContainer/TabContainer/OffsetEdit
+onready var sprite = $VBoxContainer/TabContainer/OffsetEdit/Sprite
+onready var animations = $VBoxContainer/TabContainer/OffsetEdit/Sprite/AnimationPlayer
 
 var sprites_array
 
@@ -42,6 +42,10 @@ func _ready():
 
 func _process(delta):
 	sprite.scale = Vector2(sprite_size_spin.value, sprite_size_spin.value)
+	# TODO: Make the offset buttons editable
+	x_offset_button.value = -sprite.offset.x
+	y_offset_button.value = -sprite.offset.y
+	
 
 func _input(event):
 	if Input.is_mouse_button_pressed(1):
@@ -122,12 +126,27 @@ func new_animation(anim_name, x_offset, y_offset):
 	animations.add_animation(anim_name, anim)
 	current_anim_button.add_item(anim_name)
 
+func save_load_gml():
+	# Saves a load.gml file
+	var file = File.new()
+	file.open(scripts_folder + "/load.gml", File.WRITE)
+	# For each animation, store a line
+	for x in animations.get_animation_list():
+		if x == "RESET":
+			pass
+		else:
+			var anim = animations.get_animation(x)
+			var offsets: Vector2 = anim.track_get_key_value(0, 0)
+			# TODO: Make this line shorter
+			file.store_line("sprite_change_offset(\"" + x + "\", " + str(-offsets.x) + ", " + str(-offsets.y) + ");")
+	file.close()
+	ui_anim.play("CharUpdated")
+
 func _on_FolderButton_pressed():
 	file_dialog.show()
 
 
 func _on_FileDialog_dir_selected(dir):
-	# TODO: Make a sparate function for adding animations
 	if get_load_gml(dir):
 		# For each sprite, make an animation file.
 		for x in sprites_array:
@@ -155,20 +174,7 @@ func _on_Grid_mouse_exited():
 
 
 func _on_UpdateButton_pressed():
-	# Saves a load.gml file
-	var file = File.new()
-	file.open(scripts_folder + "/load.gml", File.WRITE)
-	# For each animation, store a line
-	for x in animations.get_animation_list():
-		if x == "RESET":
-			pass
-		else:
-			var anim = animations.get_animation(x)
-			var offsets: Vector2 = anim.track_get_key_value(0, 0)
-			# TODO: Make this line shorter
-			file.store_line("sprite_change_offset(\"" + x + "\", " + str(-offsets.x) + ", " + str(-offsets.y) + ");")
-	file.close()
-	ui_anim.play("CharUpdated")
+	save_load_gml()
 
 
 func _on_CurrentAnimButton_item_selected(index):
@@ -181,3 +187,11 @@ func _on_SpriteSizeCheckBox_toggled(button_pressed):
 	else:
 		sprite_size_spin.value = 1
 		sprite_size_spin.editable = false
+
+
+func _on_XOffset_value_changed(value):
+	pass
+
+
+func _on_YOffset_value_changed(value):
+	pass
